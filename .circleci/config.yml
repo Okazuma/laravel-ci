@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Start Docker Compose
           command: |
-            docker compose -f docker-compose.yml up -d
+            docker compose -f docker-compose.yml up -d --build
 
       # Laravelの依存関係のインストール
       - run: docker compose exec -T app composer install
