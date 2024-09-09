@@ -20,7 +20,6 @@ class TestController extends Controller
         $tests->age = $request->input('age');
         $tests->address = $request->input('address');
         $tests->tel = $request->input('tel');
-        
         $tests -> save();
         return redirect()->route('detail')->with('message','データが追加されました');
     }

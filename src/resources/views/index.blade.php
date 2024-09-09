@@ -18,7 +18,7 @@
         <span>電話:</span><input type="number" name="tel">
         <button type="submit">送信</button>
 
-        
+        <p>更新されました！</p>
 
 
     </form>
