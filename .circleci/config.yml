@@ -5,6 +5,8 @@ jobs:
     docker:
       - image: cimg/php:8.3
 
+    working_directory: ~/project
+
     steps:
       - checkout
       - setup_remote_docker
@@ -15,17 +17,6 @@ jobs:
           command: sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
       # Docker Composeの起動
-      - run:
-          name: Start Docker Compose
-          command: |
-            docker compose -f docker-compose.yml up -d
-
-      - run:
-          name: docker-compose stop
-          command: |
-            set -x
-            docker-compose stop
-      
       - run:
           name: Start Docker Compose
           command: |
