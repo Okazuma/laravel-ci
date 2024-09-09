@@ -16,6 +16,10 @@ jobs:
           name: Install Docker Compose
           command: sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
+      - run:
+          name: Verify default.conf exists
+          command: ls -l ./docker/nginx/default.conf
+
       # Docker Composeの起動
       - run:
           name: Start Docker Compose
