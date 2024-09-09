@@ -4,16 +4,6 @@ jobs:
   build:
     docker:
       - image: cimg/php:8.3
-        environment:
-          MYSQL_HOST: 127.0.0.1
-          MYSQL_DB: laravel_test_db
-          MYSQL_USER: root
-          MYSQL_ALLOW_EMPTY_PASSWORD: true
-
-      - image: circleci/mysql:5.7
-        environment:
-          MYSQL_ROOT_PASSWORD: ""
-          MYSQL_DATABASE: laravel_test_db
 
     steps:
       - checkout
@@ -21,7 +11,10 @@ jobs:
       # Docker Composeのインストール
       - run:
           name: Install Docker Compose
-          command: curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
+          command: |
+          curl -L "https://github.com/docker/compose/releases/download/2.18.1/docker-compose-$(uname -s)-$(uname -m)" -o docker-compose
+          chmod +x docker-compose
+          sudo mv docker-compose /usr/local/bin/docker-compose
 
       # Docker Composeの起動
       - run:
