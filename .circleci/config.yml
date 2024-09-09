@@ -17,27 +17,27 @@ jobs:
       - run:
           name: Start Docker Compose
           command: |
-            docker-compose -f docker-compose.yml up -d
+            docker compose -f docker-compose.yml up -d
 
       # Laravelの依存関係のインストール
-      - run: docker-compose exec -T app composer install
+      - run: docker compose exec -T app composer install
 
       # .envファイルの設定
-      - run: docker-compose exec -T app cp .env.example .env.testing
+      - run: docker compose exec -T app cp .env.example .env.testing
 
       # アプリケーションキーの生成
-      - run: docker-compose exec -T app php artisan key:generate --env=testing
+      - run: docker compose exec -T app php artisan key:generate --env=testing
 
       # マイグレーションの実行
-      - run: docker-compose exec -T app php artisan migrate --env=testing
+      - run: docker compose exec -T app php artisan migrate --env=testing
 
       # PHPUnitテストの実行
-      - run: docker-compose exec -T app vendor/bin/phpunit --configuration phpunit.xml --stop-on-failure
+      - run: docker compose exec -T app vendor/bin/phpunit --configuration phpunit.xml --stop-on-failure
 
       # Docker Composeの停止
       - run:
           name: Stop Docker Compose
-          command: docker-compose down
+          command: docker compose down
 
 workflows:
   version: 2
