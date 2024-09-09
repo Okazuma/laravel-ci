@@ -11,6 +11,10 @@ jobs:
       - checkout
       - setup_remote_docker
 
+    - run:
+          name: Check working directory
+          command: pwd
+
       # Docker Composeのインストール
       - run:
           name: Install Docker Compose
