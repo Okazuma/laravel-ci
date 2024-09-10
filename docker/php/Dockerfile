@@ -3,9 +3,6 @@ FROM php:8.3.9-fpm
 # PHPの設定ファイルをコピー
 COPY php.ini /usr/local/etc/php/
 
-FROM nginx:1.27.0
-COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
-
 # 必要なパッケージとPHP拡張をインストール
 RUN apt update \
     && apt install -y \
