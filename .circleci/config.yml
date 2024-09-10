@@ -12,6 +12,10 @@ jobs:
       - setup_remote_docker
 
       - run:
+          name: Set environment variables
+          command: echo "APP_ENV=testing" >> .env
+
+      - run:
           name: Check working directory
           command: pwd
 
