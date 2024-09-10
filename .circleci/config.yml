@@ -19,7 +19,9 @@ jobs:
 
       - run:
           name: Check working directory
-          command: pwd
+          command: |
+            pwd
+            ls -l ./docker/nginx/default.conf
 
       - run:
           name: Check Docker Compose version
