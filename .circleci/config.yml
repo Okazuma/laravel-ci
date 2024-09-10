@@ -38,6 +38,11 @@ jobs:
           command: |
             docker compose -f docker-compose.yml up -d --build
 
+      # コンテナの状態を確認
+      - run:
+          name: Check running containers
+          command: docker ps
+
       # Laravelの依存関係のインストール
       - run: docker compose exec -T app composer install
 
