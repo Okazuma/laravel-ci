@@ -28,6 +28,10 @@ jobs:
           name: Verify default.conf exists in CircleCI
           command: ls -la /home/circleci/project/docker/nginx/default.conf
 
+      - run:
+          name: View Nginx Logs
+          command: docker-compose logs nginx
+
       # Docker Composeの起動
       - run:
           name: Start Docker Compose
