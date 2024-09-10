@@ -15,6 +15,10 @@ jobs:
           name: Check working directory
           command: pwd
 
+      - run:
+          name: Check Docker Compose version
+          command: docker-compose --version
+
       # Docker Composeのインストール
       - run:
           name: Install Docker Compose
