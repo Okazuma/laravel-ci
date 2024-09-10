@@ -1,12 +1,14 @@
 version: 2.1
 
-jobs:
-  build:
+executors:
+  docker-executor:
     docker:
       - image: cimg/php:8.3
-
     working_directory: ~/project
 
+jobs:
+  build:
+    executor: docker-executor
     steps:
       - checkout
       - setup_remote_docker
