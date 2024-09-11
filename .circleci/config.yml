@@ -11,28 +11,6 @@ jobs:
     executor: docker-executor
     steps:
       - checkout
-      - setup_remote_docker
-
-      - run:
-          name: Set environment variables
-          command: echo "APP_ENV=testing" >> .env
-
-      - run:
-          name: Check working directory
-          command: |
-            pwd
-            ls -l ./docker/nginx/default.conf
-
-      - run:
-          name: Ensure correct permissions for nginx default.conf
-          command: chmod 644 ./docker/nginx/default.conf
-
-      # Docker のインストール
-      - run:
-          name: Install Docker
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y docker.io
 
       # Docker Composeのインストール
       - run:
@@ -41,86 +19,46 @@ jobs:
             sudo curl -L "https://github.com/docker/compose/releases/download/2.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             sudo chmod +x /usr/local/bin/docker-compose
 
-      # default.conf の権限を修正
-      - run:
-          name: Fix permissions for default.conf
-          command: chmod 644 /home/circleci/project/docker/nginx/default.conf
-
-      - run:
-          name: Before chmod
-          command: ls -l /home/circleci/project/docker/nginx/default.conf
-
-      - run:
-          name: Fix permissions for nginx config
-          command: sudo chmod 644 /home/circleci/project/docker/nginx/default.conf
-
-      - run:
-          name: After chmod
-          command: ls -l /home/circleci/project/docker/nginx/default.conf
-
-      - run:
-          name: Verify default.conf exists
-          command: ls -l ./docker/nginx/default.conf
-
-
-      - run:
-          name: Verify default.conf exists in CircleCI
-          command: ls -la /home/circleci/project/docker/nginx/default.conf
-
-
-      - run:
-          name: Verify default.conf exists
-          command: ls -l ./docker/nginx/default.conf
-      
-      - run:
-          name: Verify if default.conf exists before mounting
-          command: ls -l /home/circleci/project/docker/nginx/default.conf
-
-      - run:
-          name: Fix permissions for nginx config
-          command: sudo chmod 644 /home/circleci/project/docker/nginx/default.conf
-
-
-
-      - run:
-          name: Verify default.conf exists in CircleCI
-          command: ls -la /home/circleci/project/docker/nginx/default.conf
-
-      - run:
-          name: View Nginx Logs
-          command: docker compose logs nginx
-
       # Docker Composeの起動
       - run:
           name: Start Docker Compose
           command: |
-            docker compose -f docker-compose.ci.yml up -d --build
+            docker-compose -f docker-compose.yml up -d --build
 
       # コンテナの状態を確認
       - run:
           name: Check running containers
-          command: docker ps
+          command: docker-compose ps
 
       # Laravelの依存関係のインストール
-      - run: docker compose exec -T app composer install
+      - run:
+          name: Install Laravel dependencies
+          command: docker-compose exec -T php composer install
 
       # .envファイルの設定
-      - run: docker compose exec -T app cp .env.example .env.testing
+      - run:
+          name: Set up .env
+          command: docker-compose exec -T php cp .env.example .env.testing
 
       # アプリケーションキーの生成
-      - run: docker compose exec -T app php artisan key:generate --env=testing
+      - run:
+          name: Generate application key
+          command: docker-compose exec -T php php artisan key:generate --env=testing
 
       # マイグレーションの実行
-      - run: docker compose exec -T app php artisan migrate --env=testing
+      - run:
+          name: Run migrations
+          command: docker-compose exec -T php php artisan migrate --env=testing
 
       # PHPUnitテストの実行
       - run:
           name: Run PHPUnit tests
-          command: docker compose -f docker-compose.ci.yml exec -T app vendor/bin/phpunit --configuration phpunit.xml --stop-on-failure
+          command: docker-compose exec -T php vendor/bin/phpunit --configuration phpunit.xml --stop-on-failure
 
+      # Docker Composeの停止
       - run:
           name: Stop Docker Compose
-          command: docker compose -f docker-compose.ci.yml down
+          command: docker-compose down
 
 workflows:
   version: 2
