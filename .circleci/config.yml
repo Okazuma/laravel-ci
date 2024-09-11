@@ -27,9 +27,7 @@ jobs:
           name: Ensure correct permissions for nginx default.conf
           command: chmod 644 ./docker/nginx/default.conf
 
-      - run:
-          name: Check if /etc/nginx/conf.d/default.conf exists
-          command: docker exec laravel-ci-nginx-1 ls -l /etc/nginx/conf.d/
+      
 
       # Docker Composeのインストール
       - run:
