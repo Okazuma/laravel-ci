@@ -42,6 +42,18 @@ jobs:
           command: chmod 644 /home/circleci/project/docker/nginx/default.conf
 
       - run:
+          name: Before chmod
+          command: ls -l /home/circleci/project/docker/nginx/default.conf
+
+      - run:
+          name: Fix permissions for nginx config
+          command: sudo chmod 644 /home/circleci/project/docker/nginx/default.conf
+
+      - run:
+          name: After chmod
+          command: ls -l /home/circleci/project/docker/nginx/default.conf
+
+      - run:
           name: Verify default.conf exists
           command: ls -l ./docker/nginx/default.conf
 
