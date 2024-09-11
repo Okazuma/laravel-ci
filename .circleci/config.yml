@@ -11,6 +11,19 @@ jobs:
     executor: docker-executor
     steps:
       - checkout
+      - setup_remote_docker
+
+      - run:
+          name: Set environment variables
+          command: echo "APP_ENV=testing" >> .env
+
+
+      # Docker のインストール
+      - run:
+          name: Install Docker
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y docker.io
 
       # Docker Composeのインストール
       - run:
@@ -19,46 +32,34 @@ jobs:
             sudo curl -L "https://github.com/docker/compose/releases/download/2.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             sudo chmod +x /usr/local/bin/docker-compose
 
+
       # Docker Composeの起動
       - run:
           name: Start Docker Compose
           command: |
-            docker-compose -f docker-compose.yml up -d --build
+            docker compose -f docker-compose.ci.yml up -d --build
 
-      # コンテナの状態を確認
-      - run:
-          name: Check running containers
-          command: docker-compose ps
 
       # Laravelの依存関係のインストール
-      - run:
-          name: Install Laravel dependencies
-          command: docker-compose exec -T php composer install
+      - run: docker compose exec -T app composer install
 
       # .envファイルの設定
-      - run:
-          name: Set up .env
-          command: docker-compose exec -T php cp .env.example .env.testing
+      - run: docker compose exec -T app cp .env.example .env.testing
 
       # アプリケーションキーの生成
-      - run:
-          name: Generate application key
-          command: docker-compose exec -T php php artisan key:generate --env=testing
+      - run: docker compose exec -T app php artisan key:generate --env=testing
 
       # マイグレーションの実行
-      - run:
-          name: Run migrations
-          command: docker-compose exec -T php php artisan migrate --env=testing
+      - run: docker compose exec -T app php artisan migrate --env=testing
 
       # PHPUnitテストの実行
       - run:
           name: Run PHPUnit tests
-          command: docker-compose exec -T php vendor/bin/phpunit --configuration phpunit.xml --stop-on-failure
+          command: docker compose -f docker-compose.ci.yml exec -T app vendor/bin/phpunit --configuration phpunit.xml --stop-on-failure
 
-      # Docker Composeの停止
       - run:
           name: Stop Docker Compose
-          command: docker-compose down
+          command: docker compose -f docker-compose.ci.yml down
 
 workflows:
   version: 2
