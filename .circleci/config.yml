@@ -18,19 +18,8 @@ jobs:
           command: echo "APP_ENV=testing" >> .env
 
 
-      # Docker のインストール
-      - run:
-          name: Install Docker
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y docker.io
 
-      # Docker Composeのインストール
-      - run:
-          name: Install Docker Compose v2.29.1
-          command: |
-            sudo curl -L "https://github.com/docker/compose/releases/download/2.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-            sudo chmod +x /usr/local/bin/docker-compose
+
 
 
       # Docker Composeの起動
