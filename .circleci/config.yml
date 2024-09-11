@@ -54,6 +54,11 @@ jobs:
       - run:
           name: Verify default.conf exists
           command: ls -l ./docker/nginx/default.conf
+      
+      - run:
+          name: Verify if default.conf exists before mounting
+          command: ls -l /home/circleci/project/docker/nginx/default.conf
+
 
       - run:
           name: Verify default.conf exists in CircleCI
