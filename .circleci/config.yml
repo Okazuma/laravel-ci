@@ -27,7 +27,12 @@ jobs:
           name: Ensure correct permissions for nginx default.conf
           command: chmod 644 ./docker/nginx/default.conf
 
-      
+      # Docker のインストール
+      - run:
+          name: Install Docker
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y docker.io
 
       # Docker Composeのインストール
       - run:
