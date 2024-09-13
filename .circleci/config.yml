@@ -14,14 +14,14 @@ jobs:
       - setup_remote_docker
 
       - run:
-        name: Copy default.conf to Nginx container
-        command: |
-          docker compose exec -T nginx cp /home/circleci/project/docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+          name: Copy default.conf to Nginx container
+          command: |
+            docker compose exec -T nginx cp /home/circleci/project/docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 
       - run:
-        name: Set permissions for default.conf
-        command: |
-          docker compose exec -T nginx chmod 644 /etc/nginx/conf.d/default.conf
+          name: Set permissions for default.conf
+          command: |
+            docker compose exec -T nginx chmod 644 /etc/nginx/conf.d/default.conf
 
 
 
