@@ -19,7 +19,7 @@ jobs:
 
       - run:
           name: Start Docker Compose
-          command: docker compose -f docker-compose.ci.yml up -d --build
+          command: docker compose -f docker-compose.yml up -d --build
 
       - run:
           name: Check file paths in CircleCI
@@ -49,16 +49,14 @@ jobs:
 
       - run:
           name: Run PHPUnit tests
-          command: docker compose -f docker-compose.ci.yml exec -T app vendor/bin/phpunit --configuration phpunit.xml --stop-on-failure
+          command: docker compose -f docker-compose.yml exec -T app vendor/bin/phpunit --configuration phpunit.xml --stop-on-failure
 
       - run:
           name: Stop Docker Compose
-          command: docker compose -f docker-compose.ci.yml down
-
+          command: docker compose -f docker-compose.yml down
 
 workflows:
   version: 2
   test:
     jobs:
       - build
-
