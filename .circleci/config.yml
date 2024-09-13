@@ -19,7 +19,7 @@ jobs:
 
       - run:
           name: Start Docker Compose
-          command: docker compose -f docker-compose.yml up -d --build
+          command: docker compose -f docker-compose.yml up --build
 
       - run:
           name: Check file paths in CircleCI
