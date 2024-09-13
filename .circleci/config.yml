@@ -4,7 +4,7 @@ executors:
   docker-executor:
     docker:
       - image: cimg/php:8.3
-    working_directory: ~/project
+    working_directory: ~/laravel-ci
 
 jobs:
   build:
@@ -13,10 +13,16 @@ jobs:
       - checkout
       - setup_remote_docker
 
-      - run:
-          name: Set environment variables
-          command: echo "APP_ENV=testing" >> .env
 
+      # Docker Compose のインストール
+      - run:
+          name: Install Docker Compose
+          command: |
+            curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            chmod +x /usr/local/bin/docker-compose
+
+
+      # Docker Compose の実行
       - run:
           name: Start Docker Compose
           command: docker compose -f docker-compose.yml up -d --build
