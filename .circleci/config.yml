@@ -11,6 +11,7 @@ jobs:
     executor: docker-executor
     steps:
       - checkout
+          path: ~/laravel-ci
       - setup_remote_docker
 
       # - run:
