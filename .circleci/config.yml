@@ -18,8 +18,12 @@ jobs:
       - run:
           name: Install Docker Compose
           command: |
-            curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             chmod +x /usr/local/bin/docker-compose
+
+      # - run:
+      #     name: Set environment variables
+      #     command: echo "APP_ENV=testing" >> .env
 
 
       # Docker Compose の実行
