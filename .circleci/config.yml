@@ -13,6 +13,17 @@ jobs:
       - checkout
       - setup_remote_docker
 
+      - run:
+        name: Copy default.conf to Nginx container
+        command: |
+          docker compose exec -T nginx cp /home/circleci/project/docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+
+      - run:
+        name: Set permissions for default.conf
+        command: |
+          docker compose exec -T nginx chmod 644 /etc/nginx/conf.d/default.conf
+
+
 
       - run:
           name: Check local file paths before starting Docker Compose
@@ -36,7 +47,7 @@ jobs:
 
       - run:
           name: Start Docker Compose
-          command: docker compose -f docker-compose.ci.yml up --build
+          command: docker compose -f docker-compose.yml up --build
 
       - run:
           name: Check file paths in CircleCI
@@ -62,11 +73,11 @@ jobs:
 
       - run:
           name: Run PHPUnit tests
-          command: docker compose -f docker-compose.ci.yml exec -T app vendor/bin/phpunit --configuration phpunit.xml --stop-on-failure
+          command: docker compose -f docker-compose.yml exec -T app vendor/bin/phpunit --configuration phpunit.xml --stop-on-failure
 
       - run:
           name: Stop Docker Compose
-          command: docker compose -f docker-compose.ci.yml down
+          command: docker compose -f docker-compose.ci yml down
 
 workflows:
   version: 2
