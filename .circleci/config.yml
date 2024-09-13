@@ -22,12 +22,24 @@ jobs:
           name: Start Docker Compose
           command: |
             set -x
-            docker compose -f docker-compose.ci.yml up -d --build
+            docker compose up -d --build
+
+      - run:
+          name: docker-compose stop
+          command: |
+            set -x
+            docker-compose stop
+
+      - run:
+          name: Start Docker Compose
+          command: |
+            set -x
+            docker compose up -d --build
+            
 
       - run:
           name: Remove existing default.conf
           command: docker compose exec nginx rm /etc/nginx/conf.d/default.conf
-
 
       # Laravelの依存関係のインストール
       - run: docker compose exec -T app composer install
@@ -44,14 +56,15 @@ jobs:
       # PHPUnitテストの実行
       - run:
           name: Run PHPUnit tests
-          command: docker compose -f docker-compose.ci.yml exec -T app vendor/bin/phpunit --configuration phpunit.xml --stop-on-failure
+          command: docker compose exec -T app vendor/bin/phpunit --configuration phpunit.xml --stop-on-failure
 
       - run:
           name: Stop Docker Compose
-          command: docker compose -f docker-compose.ci.yml down
+          command: docker compose down
 
 workflows:
   version: 2
   test:
     jobs:
       - build
+
