@@ -17,9 +17,6 @@ jobs:
           name: Set environment variables
           command: echo "APP_ENV=testing" >> .env
 
-      - run:
-          name: Start Docker Compose
-          command: docker compose -f docker-compose.yml up --build
 
       - run:
           name: Check file paths in CircleCI
@@ -30,6 +27,10 @@ jobs:
       - run:
           name: Remove existing default.conf
           command: docker compose exec nginx rm /etc/nginx/conf.d/default.conf
+          
+      - run:
+          name: Start Docker Compose
+          command: docker compose -f docker-compose.yml up --build
 
       - run:
           name: Laravel dependency installation
