@@ -3,7 +3,7 @@ version: 2.1
 executors:
   machine-executor:
     machine:
-      image: ubuntu-2204:2023.07.1
+      image: ubuntu-2004:202101-01 
       resource_class: medium
     working_directory: ~/laravel-ci
 
