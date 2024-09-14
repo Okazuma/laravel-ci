@@ -46,6 +46,10 @@ jobs:
           command: docker compose exec -T php ls /var/www/
 
       - run:
+          name: Check .env.testing file
+          command: cat .env.testing
+
+      - run:
           name: Copy .env.testing to Docker container
           command: docker compose exec -T php cp /var/www/.env.testing /var/www/.env
 
