@@ -38,9 +38,14 @@ jobs:
           command: cp .env /var/www/.env
 
 
+      - run:
+          name: Copy .env file
+          command: docker compose exec -T php cp .env /var/www/.env
+
+
       # - run:
-      #     name: Copy .env file
-      #     command: docker compose exec -T php cp .env /var/www/.env
+      #     name: Set .env file
+      #     command: docker compose exec -T php cp .env.example .env.testing
 
       - run:
           name: Generate application key
