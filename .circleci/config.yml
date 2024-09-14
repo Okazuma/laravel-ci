@@ -6,13 +6,17 @@ executors:
       - image: cimg/php:8.3
     working_directory: ~/laravel-ci
 
+  machine-executor:
+    machine:
+      image: ubuntu-1804:202101-01
+
 jobs:
   build:
-    executor: docker-executor
+    executor: machine-executor
     steps:
       - checkout
           # path: ~/laravel-ci
-      - setup_remote_docker
+      # - setup_remote_docker
 
       # - run:
       #     name: Set environment variables
@@ -24,7 +28,6 @@ jobs:
           name: Start Docker Compose
           command: docker compose -f docker-compose.yml up -d --build
 
-      
 
       - run:
           name: Set permissions for default.conf
