@@ -3,8 +3,8 @@ version: 2.1
 executors:
   machine-executor:
     machine:
-      image: circleci/classic:edge
-      # resource_class: medium
+      image: ubuntu-2204:2023.07.1
+      resource_class: small
     working_directory: ~/laravel-ci
 
 jobs:
