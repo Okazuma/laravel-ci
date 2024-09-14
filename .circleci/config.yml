@@ -20,10 +20,7 @@ jobs:
           name: Start Docker Compose
           command: docker compose -f docker-compose.yml up -d --build
 
-      # # Nginx コンフィグ用ディレクトリを作成
-      # - run:
-      #     name: Create Nginx conf directory
-      #     command: docker compose exec -T nginx mkdir -p /etc/nginx/conf.d
+      
 
       # # ファイルを手動でコピー
       # - run:
