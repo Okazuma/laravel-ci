@@ -34,7 +34,7 @@ jobs:
 
       - run:
           name: Laravel dependency installation
-          command: docker compose exec -T app composer install
+          command: docker compose exec -T php composer install
 
       - run:
           name: Set .env file
