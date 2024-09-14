@@ -29,9 +29,13 @@ jobs:
           name: Laravel dependency installation
           command: docker compose exec -T php composer install
 
+      # - run:
+      #     name: Set .env file
+      #     command: docker compose exec -T php cp .env.example .env.testing
+
       - run:
-          name: Set .env file
-          command: docker compose exec -T php cp .env.example .env.testing
+          name: Copy .env file
+          command: docker compose exec -T php cp .env /var/www/.env
 
       - run:
           name: Generate application key
