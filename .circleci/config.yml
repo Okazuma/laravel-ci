@@ -30,28 +30,39 @@ jobs:
           command: docker compose exec -T php composer install
 
 
+      # - run:
+      #     name: Create .env.testing file
+      #     command: |
+      #       echo "DB_CONNECTION=mysql" > .env.testing
+      #       echo "DB_HOST=mysql" >> .env.testing
+      #       echo "DB_PORT=3306" >> .env.testing
+      #       echo "DB_DATABASE=laravel_db" >> .env.testing
+      #       echo "DB_USERNAME=laravel_user" >> .env.testing
+      #       echo "DB_PASSWORD=laravel_pass" >> .env.testing
+
+
+      # - run:
+      #     name: Check .env.testing
+      #     command: docker compose exec -T php ls -a /var/www/
+
+      # - run:
+      #     name: Check .env.testing file
+      #     command: cat .env.testing
+
+      # - run:
+      #     name: Copy .env.testing to Docker container
+      #     command: docker compose exec -T php cp /var/www/.env.testing /var/www/.env
+
+
       - run:
-          name: Create .env.testing file
+          name: Create .env file from environment variables
           command: |
-            echo "DB_CONNECTION=mysql" > .env.testing
-            echo "DB_HOST=mysql" >> .env.testing
-            echo "DB_PORT=3306" >> .env.testing
-            echo "DB_DATABASE=laravel_db" >> .env.testing
-            echo "DB_USERNAME=laravel_user" >> .env.testing
-            echo "DB_PASSWORD=laravel_pass" >> .env.testing
-
-
-      - run:
-          name: Check .env.testing
-          command: docker compose exec -T php ls -a /var/www/
-
-      - run:
-          name: Check .env.testing file
-          command: cat .env.testing
-
-      - run:
-          name: Copy .env.testing to Docker container
-          command: docker compose exec -T php cp /var/www/.env.testing /var/www/.env
+            echo "DB_CONNECTION=${DB_CONNECTION}" > .env
+            echo "DB_HOST=${DB_HOST}" >> .env
+            echo "DB_PORT=${DB_PORT}" >> .env
+            echo "DB_DATABASE=${DB_DATABASE}" >> .env
+            echo "DB_USERNAME=${DB_USERNAME}" >> .env
+            echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
 
 
 
