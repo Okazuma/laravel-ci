@@ -4,6 +4,7 @@ executors:
   machine-executor:
     machine:
       image: ubuntu-2204:2023.07.1
+      resource_class: large
     working_directory: ~/laravel-ci
 
 jobs:
