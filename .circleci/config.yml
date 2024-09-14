@@ -1,9 +1,11 @@
 version: 2.1
 
 executors:
-  machine-executor:
-    machine:
-      image: cimg/php:8.3
+  # machine-executor:
+    # machine:
+  docker-executor:
+    docker:
+      - image: cimg/php:8.3
       # resource_class: small
     working_directory: ~/laravel-ci
 
