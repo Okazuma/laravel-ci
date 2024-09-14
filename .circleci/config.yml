@@ -4,7 +4,6 @@ executors:
   machine-executor:
     machine:
       image: ubuntu-2404:2024.05.1
-      # resource_class: large
     working_directory: ~/laravel-ci
 
 jobs:
@@ -22,13 +21,16 @@ jobs:
           command: docker compose -f docker-compose.yml up -d --build
 
       - run:
+          name: List Docker Containers
+          command: docker ps  # コンテナの状態を確認する
+
+      - run:
           name: Wait for services to start
           command: sleep 30  # サービスが起動するまで待機
 
-      # # ファイルを手動でコピー
-      # - run:
-      #     name: Copy Nginx configuration
-      #     command: cp ./docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+      - run:
+          name: List Docker Containers
+          command: docker ps  # コンテナの状態を確認する
 
       - run:
           name: Laravel dependency installation
@@ -52,7 +54,7 @@ jobs:
 
       - run:
           name: Stop Docker Compose
-          command: docker compose -f docker-compose.ci.yml down
+          command: docker compose -f docker-compose.yml down
 
 workflows:
   version: 2
