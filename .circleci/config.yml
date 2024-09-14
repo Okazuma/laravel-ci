@@ -5,14 +5,11 @@ executors:
     machine:
       image: ubuntu-2204:2023.07.1
       resource_class: xlarge
-    working_directory: ~/laravel-ci
-
-
-
 
 jobs:
   build:
     executor: machine-executor
+    working_directory: ~/laravel-ci
     steps:
       - checkout
           # path: ~/laravel-ci
