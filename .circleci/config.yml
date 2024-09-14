@@ -24,7 +24,7 @@ jobs:
       # Docker Compose の実行
       - run:
           name: Start Docker Compose
-          command: docker compose -f docker-compose.yml up -d --build
+          command: docker compose up -d --build
 
 
       - run:
