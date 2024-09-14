@@ -15,6 +15,7 @@ jobs:
     # working_directory: ~/laravel-ci
     steps:
       - checkout
+      - setup_remote_docker
           # path: ~/laravel-ci
       # - setup_remote_docker
 
@@ -32,7 +33,7 @@ jobs:
       - run:
           name: Create Nginx conf directory
           command: docker compose exec -T nginx mkdir -p /etc/nginx/conf.d
-          
+
       # ファイルを手動でコピー
       - run:
           name: Copy Nginx configuration
