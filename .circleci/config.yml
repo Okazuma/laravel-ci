@@ -4,7 +4,6 @@ executors:
   machine-executor:
     machine:
       image: ubuntu-2204:2023.07.1
-      resource_class: medium
 
 jobs:
   build:
