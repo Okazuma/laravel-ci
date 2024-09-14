@@ -8,7 +8,9 @@ executors:
 
   machine-executor:
     machine:
-      image: ubuntu-1804:202101-01
+      image: ubuntu-2004:202101-01
+      resource_class: medium
+
 
 jobs:
   build:
