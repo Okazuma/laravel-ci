@@ -20,13 +20,6 @@ jobs:
           name: Start Docker Compose
           command: docker compose -f docker-compose.yml up -d --build
 
-      - run:
-          name: List Docker Containers
-          command: docker ps  # コンテナの状態を確認する
-
-      - run:
-          name: Wait for services to start
-          command: sleep 30  # サービスが起動するまで待機
 
       - run:
           name: List Docker Containers
@@ -38,7 +31,7 @@ jobs:
 
       - run:
           name: Set .env file
-          command: docker compose exec -T app cp .env.example .env.testing
+          command: docker compose exec -T php cp .env.example .env.testing
 
       - run:
           name: Generate application key
