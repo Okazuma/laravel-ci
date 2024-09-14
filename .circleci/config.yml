@@ -29,13 +29,6 @@ jobs:
           name: Laravel dependency installation
           command: docker compose exec -T php composer install
 
-      # - run:
-      #     name: Set .env file
-      #     command: docker compose exec -T php cp .env.example .env.testing
-
-      # - run:
-      #     name: Copy .env file
-      #     command: docker compose exec -T php cp .env.testing /var/www/.env
 
       - run:
           name: Create .env.testing file
@@ -46,6 +39,12 @@ jobs:
             echo "DB_DATABASE=laravel_db" >> .env.testing
             echo "DB_USERNAME=laravel_user" >> .env.testing
             echo "DB_PASSWORD=laravel_pass" >> .env.testing
+
+
+      - run:
+          name: Check .env.testing
+          command: docker compose exec -T php ls /var/www/
+
       - run:
           name: Copy .env.testing to Docker container
           command: docker compose exec -T php cp /var/www/.env.testing /var/www/.env
