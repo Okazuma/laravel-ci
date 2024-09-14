@@ -35,11 +35,11 @@ jobs:
 
       - run:
           name: Generate application key
-          command: docker compose exec -T app php artisan key:generate --env=testing
+          command: docker compose exec -T php php artisan key:generate --env=testing
 
       - run:
           name: Run migrations
-          command: docker compose exec -T app php artisan migrate --env=testing
+          command: docker compose exec -T php php artisan migrate --env=testing
 
       - run:
           name: Run PHPUnit tests
