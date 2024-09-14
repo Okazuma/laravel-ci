@@ -35,12 +35,8 @@ jobs:
 
       - run:
           name: Copy .env file
-          command: cp .env /var/www/.env
+          command: docker compose exec -T php cp .env.testing /var/www/.env
 
-
-      - run:
-          name: Copy .env file
-          command: docker compose exec -T php cp .env /var/www/.env
 
 
       # - run:
