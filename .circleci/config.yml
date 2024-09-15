@@ -61,7 +61,7 @@ jobs:
 
       - run:
           name: Clear cache
-          command: php artisan config:cache
+          command: docker compose exec -T php php artisan config:cache
 
       - run:
           name: Check .env
