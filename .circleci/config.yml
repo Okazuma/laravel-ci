@@ -53,6 +53,11 @@ jobs:
           name: Check permissions for .env file
           command: docker compose exec -T php ls -l /var/www/.env
 
+
+      - run:
+          name: Check current user
+          command: docker compose exec -T php whoami
+
       - run:
           name: Generate application key
           command: docker compose exec -T php php artisan key:generate
