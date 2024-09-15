@@ -46,7 +46,6 @@ jobs:
           name: Check .env file on host
           command: ls -a
 
-
       - run:
           name: Copy .env file from host to container
           command: docker compose cp .env php:/var/www/.env
