@@ -66,6 +66,10 @@ jobs:
           name: Check migration
           command: docker compose exec -T php ls -la /var/www/database/migrations
 
+      - run:
+          name: Migrations check
+          command: docker compose exec -T mysql mysql -u laravel_user -p'laravel_pass' -e "SHOW TABLES;" laravel_db
+
 
       - run:
           name: Run PHPUnit tests
