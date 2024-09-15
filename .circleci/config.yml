@@ -63,6 +63,11 @@ jobs:
           command: docker compose exec -T php php artisan migrate
 
       - run:
+          name: Check migration
+          command: docker compose exec -T php ls -la /var/www/database/migrations
+
+
+      - run:
           name: Run PHPUnit tests
           command: docker compose -f docker-compose.yml exec -T php vendor/bin/phpunit --configuration phpunit.xml --stop-on-failure
 
