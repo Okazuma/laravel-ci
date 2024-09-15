@@ -29,7 +29,7 @@ jobs:
             echo "DB_DATABASE=${DB_DATABASE}" >> .env
             echo "DB_USERNAME=${DB_USERNAME}" >> .env
             echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
-            
+
       - run:
           name: Start Docker Compose
           command: docker compose -f docker-compose.yml up -d --build
@@ -86,9 +86,9 @@ jobs:
           name: Generate application key
           command: docker compose exec -T php php artisan key:generate
 
-      # - run:
-      #     name: Run migrations
-      #     command: docker compose exec -T php php artisan migrate
+      - run:
+          name: Run migrations
+          command: docker compose exec -T php php artisan migrate
 
       - run:
           name: Run PHPUnit tests
