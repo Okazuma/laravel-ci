@@ -66,10 +66,17 @@ jobs:
       #     name: Generate application key
       #     command: docker compose exec -T php php artisan key:generate
 
-
       - run:
-          name: Generate application key as root
-          command: docker compose exec -T --user root php php artisan key:generate
+          name: Generate APP_KEY and manually add it to .env
+          command: |
+            APP_KEY=$(docker compose exec -T php php artisan key:generate --show)
+            echo "APP_KEY=$APP_KEY" >> .env
+            docker compose cp .env php:/var/www/.env
+
+
+      # - run:
+      #     name: Generate application key as root
+      #     command: docker compose exec -T --user root php php artisan key:generate
 
 
       # /var/www/の.envの確認
