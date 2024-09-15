@@ -41,6 +41,17 @@ jobs:
           name: Copy .env file from host to container
           command: docker compose cp .env php:/var/www/.env
 
+      - run:
+          name: Clear cache
+          command: docker compose exec -T php php artisan config:cache
+
+      - run:
+          name: Clear Laravel configuration cache
+          command: docker compose exec -T php php artisan config:clear
+
+      - run:
+          name: Check permissions for .env file
+          command: docker compose exec -T php ls -l /var/www/.env
 
       - run:
           name: Generate application key
