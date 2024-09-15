@@ -62,9 +62,15 @@ jobs:
           name: Check user groups
           command: docker compose exec -T php id
 
+      # - run:
+      #     name: Generate application key
+      #     command: docker compose exec -T php php artisan key:generate
+
+
       - run:
-          name: Generate application key
-          command: docker compose exec -T php php artisan key:generate
+          name: Generate application key as root
+          command: docker compose exec -T --user root php php artisan key:generate
+
 
       # /var/www/の.envの確認
       - run:
