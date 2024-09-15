@@ -56,13 +56,22 @@ jobs:
           command: docker compose exec -T php ls -a /var/www/
 
 
+
+      - run:
+          name: Check .env file in container
+          command: docker compose exec -T php ls -a /var/www/
+
+
+
+
+
       - run:
           name: Generate application key
           command: docker compose exec -T php php artisan key:generate
 
       - run:
           name: Run migrations
-          command: docker compose exec -T php php artisan migrate --force
+          command: docker compose exec -T php php artisan migrate
 
       - run:
           name: Run PHPUnit tests
