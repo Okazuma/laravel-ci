@@ -71,7 +71,7 @@ jobs:
 
       - run:
           name: Run PHPUnit tests
-          command: docker compose -f docker-compose.yml exec -T app vendor/bin/phpunit --configuration phpunit.xml --stop-on-failure
+          command: docker compose -f docker-compose.yml exec -T php vendor/bin/phpunit --configuration phpunit.xml --stop-on-failure
 
       - run:
           name: Stop Docker Compose
