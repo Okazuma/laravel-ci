@@ -59,6 +59,10 @@ jobs:
           command: docker compose exec -T php whoami
 
       - run:
+          name: Check user groups
+          command: docker compose exec -T php id
+
+      - run:
           name: Generate application key
           command: docker compose exec -T php php artisan key:generate
 
