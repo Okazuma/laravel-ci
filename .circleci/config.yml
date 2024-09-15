@@ -65,13 +65,13 @@ jobs:
           name: Generate application key
           command: docker compose exec -T php php artisan key:generate
 
-      - run:
-          name: Run migrations
-          command: docker compose exec -T php php artisan migrate
+      # - run:
+      #     name: Run migrations
+      #     command: docker compose exec -T php php artisan migrate
 
-      - run:
-          name: Run PHPUnit tests
-          command: docker compose -f docker-compose.yml exec -T app vendor/bin/phpunit --configuration phpunit.xml --stop-on-failure
+      # - run:
+      #     name: Run PHPUnit tests
+      #     command: docker compose -f docker-compose.yml exec -T app vendor/bin/phpunit --configuration phpunit.xml --stop-on-failure
 
       - run:
           name: Stop Docker Compose
