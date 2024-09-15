@@ -38,12 +38,17 @@ jobs:
           command: docker compose exec -T php composer install
 
       - run:
+          name: Generate application key
+          command: docker compose exec -T php php artisan key:generate
+
+      - run:
           name: Copy .env file from host to container
           command: docker compose cp .env php:/var/www/.env
 
-      - run:
-          name: Generate application key
-          command: docker compose exec -T php php artisan key:generate
+
+      # - run:
+      #     name: Generate application key
+      #     command: docker compose exec -T php php artisan key:generate
 
       # /var/www/の.envの確認
       - run:
