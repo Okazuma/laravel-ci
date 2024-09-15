@@ -16,6 +16,20 @@ jobs:
           command: |
             sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             sudo chmod +x /usr/local/bin/docker-compose
+
+
+      # .envファイルの作成(project settingで環境変数設定)
+      - run:
+          name: Create .env file from environment variables
+          command: |
+            echo "APP_ENV=local" > .env
+            echo "DB_CONNECTION=${DB_CONNECTION}" >> .env
+            echo "DB_HOST=${DB_HOST}" >> .env
+            echo "DB_PORT=${DB_PORT}" >> .env
+            echo "DB_DATABASE=${DB_DATABASE}" >> .env
+            echo "DB_USERNAME=${DB_USERNAME}" >> .env
+            echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
+            
       - run:
           name: Start Docker Compose
           command: docker compose -f docker-compose.yml up -d --build
@@ -31,17 +45,17 @@ jobs:
 
 
 
-      # .envファイルの作成(project settingで環境変数設定)
-      - run:
-          name: Create .env file from environment variables
-          command: |
-            echo "APP_ENV=local" > .env
-            echo "DB_CONNECTION=${DB_CONNECTION}" >> .env
-            echo "DB_HOST=${DB_HOST}" >> .env
-            echo "DB_PORT=${DB_PORT}" >> .env
-            echo "DB_DATABASE=${DB_DATABASE}" >> .env
-            echo "DB_USERNAME=${DB_USERNAME}" >> .env
-            echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
+      # # .envファイルの作成(project settingで環境変数設定)
+      # - run:
+      #     name: Create .env file from environment variables
+      #     command: |
+      #       echo "APP_ENV=local" > .env
+      #       echo "DB_CONNECTION=${DB_CONNECTION}" >> .env
+      #       echo "DB_HOST=${DB_HOST}" >> .env
+      #       echo "DB_PORT=${DB_PORT}" >> .env
+      #       echo "DB_DATABASE=${DB_DATABASE}" >> .env
+      #       echo "DB_USERNAME=${DB_USERNAME}" >> .env
+      #       echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
 
       - run:
           name: Check MySQL user and privileges
