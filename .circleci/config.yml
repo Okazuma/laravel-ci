@@ -42,7 +42,7 @@ jobs:
 
 
       # - run:
-      #     name: Check .env.testing
+      #     name: Check .env
       #     command: docker compose exec -T php ls -a /var/www/
 
       # - run:
@@ -64,7 +64,10 @@ jobs:
             echo "DB_USERNAME=${DB_USERNAME}" >> .env
             echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
 
-
+      
+      - run:
+          name: Check .env
+          command: docker compose exec -T php ls -a /var/www/
 
       # - run:
       #     name: Set .env file
