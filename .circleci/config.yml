@@ -47,11 +47,6 @@ jobs:
           command: ls -a
 
 
-
-    #   - run:
-    # name: Copy .env file to container
-    # command: docker compose exec -T php cp /var/www/.env.example /var/www/.env
-
       - run:
           name: Copy .env file from host to container
           command: docker compose cp .env php:/var/www/.env
@@ -61,9 +56,6 @@ jobs:
           name: Check .env
           command: docker compose exec -T php ls -a /var/www/
 
-      # - run:
-      #     name: Set .env file
-      #     command: docker compose exec -T php cp .env.example .env.testing
 
       - run:
           name: Generate application key
@@ -71,7 +63,7 @@ jobs:
 
       - run:
           name: Run migrations
-          command: docker compose exec -T php php artisan migrate
+          command: docker compose exec -T php php artisan migrate --force
 
       - run:
           name: Run PHPUnit tests
