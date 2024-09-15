@@ -47,6 +47,15 @@ jobs:
           command: ls -a
 
 
+
+    #   - run:
+    # name: Copy .env file to container
+    # command: docker compose exec -T php cp /var/www/.env.example /var/www/.env
+
+      - run:
+          name: Copy .env file from host to container
+          command: docker compose cp .env php:/var/www/.env
+
       # /var/www/の.envの確認
       - run:
           name: Check .env
