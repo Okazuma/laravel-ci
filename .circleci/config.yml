@@ -30,30 +30,8 @@ jobs:
           command: docker compose exec -T php composer install
 
 
-      # - run:
-      #     name: Create .env.testing file
-      #     command: |
-      #       echo "DB_CONNECTION=mysql" > .env.testing
-      #       echo "DB_HOST=mysql" >> .env.testing
-      #       echo "DB_PORT=3306" >> .env.testing
-      #       echo "DB_DATABASE=laravel_db" >> .env.testing
-      #       echo "DB_USERNAME=laravel_user" >> .env.testing
-      #       echo "DB_PASSWORD=laravel_pass" >> .env.testing
 
-
-      # - run:
-      #     name: Check .env
-      #     command: docker compose exec -T php ls -a /var/www/
-
-      # - run:
-      #     name: Check .env.testing file
-      #     command: cat .env.testing
-
-      # - run:
-      #     name: Copy .env.testing to Docker container
-      #     command: docker compose exec -T php cp /var/www/.env.testing /var/www/.env
-
-
+      # .envファイルの作成(project settingで環境変数設定)
       - run:
           name: Create .env file from environment variables
           command: |
@@ -64,7 +42,12 @@ jobs:
             echo "DB_USERNAME=${DB_USERNAME}" >> .env
             echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
 
-      
+      - run:
+          name: Check .env file on host
+          command: ls -a
+
+
+      # /var/www/の.envの確認
       - run:
           name: Check .env
           command: docker compose exec -T php ls -a /var/www/
