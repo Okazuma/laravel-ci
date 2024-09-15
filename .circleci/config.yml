@@ -35,6 +35,7 @@ jobs:
       - run:
           name: Create .env file from environment variables
           command: |
+            echo "APP_ENV=local" > .env
             echo "DB_CONNECTION=${DB_CONNECTION}" > .env
             echo "DB_HOST=${DB_HOST}" >> .env
             echo "DB_PORT=${DB_PORT}" >> .env
@@ -55,14 +56,9 @@ jobs:
           name: Check .env
           command: docker compose exec -T php ls -a /var/www/
 
-
-
       - run:
           name: Check .env file in container
           command: docker compose exec -T php ls -a /var/www/
-
-
-
 
 
       - run:
