@@ -67,7 +67,7 @@ jobs:
 
       - run:
           name: Run migrations
-          command: docker compose exec -T php php artisan migrate
+          command: docker compose exec -T php php artisan migrate --force
 
       - run:
           name: Run PHPUnit tests
