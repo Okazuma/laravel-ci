@@ -45,6 +45,11 @@ jobs:
             docker compose exec -T mysql mysql -u root -p${MYSQL_ROOT_PASSWORD} -e "SELECT User, Host FROM mysql.user;"
             docker compose exec -T mysql mysql -u root -p${MYSQL_ROOT_PASSWORD} -e "SHOW GRANTS FOR 'laravel_user'@'%';"
 
+
+      - run:
+          name: Generate application key
+          command: docker compose exec -T php php artisan key:generate
+
       - run:
           name: Copy .env file from host to container
           command: docker compose cp .env php:/var/www/.env
@@ -54,9 +59,9 @@ jobs:
           name: Check .env file in container
           command: docker compose exec -T php ls -a /var/www/
 
-      - run:
-          name: Generate application key
-          command: docker compose exec -T php php artisan key:generate
+      # - run:
+      #     name: Generate application key
+      #     command: docker compose exec -T php php artisan key:generate
 
 
       - run:
