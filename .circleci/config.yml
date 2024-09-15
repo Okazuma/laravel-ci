@@ -59,12 +59,14 @@ jobs:
           command: docker compose exec -T php php artisan key:generate
 
 
+      - run:
+          name: Clear cache
+          command: php artisan config:cache
 
       - run:
           name: Check .env
           command: docker compose exec -T php cat /var/www/.env
 
-          
       - run:
           name: Run migrations
           command: docker compose exec -T php php artisan migrate
