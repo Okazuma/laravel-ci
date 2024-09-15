@@ -17,7 +17,6 @@ jobs:
             sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             sudo chmod +x /usr/local/bin/docker-compose
 
-
       # .envファイルの作成(project settingで環境変数設定)
       - run:
           name: Create .env file from environment variables
@@ -34,28 +33,11 @@ jobs:
           name: Start Docker Compose
           command: docker compose -f docker-compose.yml up -d --build
 
-
-      - run:
-          name: List Docker Containers
-          command: docker ps  # コンテナの状態を確認する
-
       - run:
           name: Laravel dependency installation
           command: docker compose exec -T php composer install
 
 
-
-      # # .envファイルの作成(project settingで環境変数設定)
-      # - run:
-      #     name: Create .env file from environment variables
-      #     command: |
-      #       echo "APP_ENV=local" > .env
-      #       echo "DB_CONNECTION=${DB_CONNECTION}" >> .env
-      #       echo "DB_HOST=${DB_HOST}" >> .env
-      #       echo "DB_PORT=${DB_PORT}" >> .env
-      #       echo "DB_DATABASE=${DB_DATABASE}" >> .env
-      #       echo "DB_USERNAME=${DB_USERNAME}" >> .env
-      #       echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
 
       - run:
           name: Check MySQL user and privileges
@@ -63,24 +45,14 @@ jobs:
             docker compose exec -T mysql mysql -u root -p${MYSQL_ROOT_PASSWORD} -e "SELECT User, Host FROM mysql.user;"
             docker compose exec -T mysql mysql -u root -p${MYSQL_ROOT_PASSWORD} -e "SHOW GRANTS FOR 'laravel_user'@'%';"
 
-
-      - run:
-          name: Check .env file on host
-          command: ls -a
-
       - run:
           name: Copy .env file from host to container
           command: docker compose cp .env php:/var/www/.env
 
       # /var/www/の.envの確認
       - run:
-          name: Check .env
-          command: docker compose exec -T php ls -a /var/www/
-
-      - run:
           name: Check .env file in container
           command: docker compose exec -T php ls -a /var/www/
-
 
       - run:
           name: Generate application key
