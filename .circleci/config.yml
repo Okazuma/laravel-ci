@@ -49,18 +49,6 @@ jobs:
           name: Clear Laravel configuration cache
           command: docker compose exec -T php php artisan config:clear
 
-      - run:
-          name: Check permissions for .env file
-          command: docker compose exec -T php ls -l /var/www/.env
-
-
-      - run:
-          name: Check current user
-          command: docker compose exec -T php whoami
-
-      - run:
-          name: Check user groups
-          command: docker compose exec -T php id
 
       # - run:
       #     name: Generate application key
@@ -73,20 +61,10 @@ jobs:
             echo "APP_KEY=$APP_KEY" >> .env
             docker compose cp .env php:/var/www/.env
 
-
-      # - run:
-      #     name: Generate application key as root
-      #     command: docker compose exec -T --user root php php artisan key:generate
-
-
       # /var/www/の.envの確認
       - run:
           name: Check .env file in container
           command: docker compose exec -T php ls -a /var/www/
-
-      - run:
-          name: Clear cache
-          command: docker compose exec -T php php artisan config:cache
 
       - run:
           name: Check .env
