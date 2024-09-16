@@ -29,31 +29,32 @@ jobs:
             echo "DB_USERNAME=${DB_USERNAME}" >> .env
             echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
 
+      # docker-composeでコンテナの起動
       - run:
           name: Start Docker Compose
           command: docker compose -f docker-compose.yml up -d --build
 
+      # composerのインストール
       - run:
           name: Laravel dependency installation
           command: docker compose exec -T php composer install
 
+      # .envファイルをコンテナ内にコピー
       - run:
           name: Copy .env file from host to container
           command: docker compose cp .env php:/var/www/.env
 
+      # キャッシュのクリア
       - run:
           name: Clear cache
           command: docker compose exec -T php php artisan config:cache
 
+      # キャッシュのクリア
       - run:
           name: Clear Laravel configuration cache
           command: docker compose exec -T php php artisan config:clear
 
-
-      # - run:
-      #     name: Generate application key
-      #     command: docker compose exec -T php php artisan key:generate
-
+      # アプリケーションキーを生成して.envへ追加
       - run:
           name: Generate APP_KEY and manually add it to .env
           command: |
@@ -70,6 +71,7 @@ jobs:
           name: Check .env
           command: docker compose exec -T php cat /var/www/.env
 
+      # マイグレーションの実行
       - run:
           name: Run migrations
           command: docker compose exec -T php php artisan migrate
