@@ -76,15 +76,14 @@ jobs:
           name: Run migrations
           command: docker compose exec -T php php artisan migrate
 
-      - run:
-          name: Check migration
-          command: docker compose exec -T php ls -la /var/www/database/migrations
+      
 
+      #  マイグレーションでテーブルが作成されたかの確認
       - run:
           name: Migrations check
           command: docker compose exec -T mysql mysql -u laravel_user -p'laravel_pass' -e "SHOW TABLES;" laravel_db
 
-
+      # テストの実行
       - run:
           name: Run PHPUnit tests
           command: docker compose -f docker-compose.yml exec -T php vendor/bin/phpunit --configuration phpunit.xml --stop-on-failure
