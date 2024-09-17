@@ -76,8 +76,6 @@ jobs:
           name: Run migrations
           command: docker compose exec -T php php artisan migrate
 
-      
-
       #  マイグレーションでテーブルが作成されたかの確認
       - run:
           name: Migrations check
