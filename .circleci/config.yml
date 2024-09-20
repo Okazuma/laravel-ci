@@ -11,24 +11,32 @@ jobs:
     executor: machine-executor
     steps:
       - checkout
+
+
+      # .docker composeのインストール
       - run:
           name: Install Docker Compose
           command: |
             sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             sudo chmod +x /usr/local/bin/docker-compose
+
+
+      # .docker composeの起動
       - run:
           name: Start Docker Compose
           command: docker compose -f docker-compose.yml up -d --build
 
 
+      # .コンテナの確認
       - run:
           name: List Docker Containers
-          command: docker ps  # コンテナの状態を確認する
+          command: docker ps
 
+
+      # .composerのインストール
       - run:
           name: Laravel dependency installation
           command: docker compose exec -T php composer install
-
 
 
       # .envファイルの作成(project settingで環境変数設定)
