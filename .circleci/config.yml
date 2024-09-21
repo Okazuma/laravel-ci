@@ -50,11 +50,12 @@ jobs:
             echo "DB_USERNAME=${DB_USERNAME}" >> .env
             echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
 
+      # .envの確認
       - run:
           name: Check .env file on host
           command: ls -a
 
-
+      # docker-composeの立ち上げ
       - run:
           name: Copy .env file from host to container
           command: docker compose cp .env php:/var/www/.env
@@ -64,11 +65,12 @@ jobs:
           name: Check .env
           command: docker compose exec -T php ls -a /var/www/
 
-
+      # APP_KEYの生成
       - run:
           name: Generate application key
           command: docker compose exec -T php php artisan key:generate
 
+      # マイグレーションの実行
       - run:
           name: Run migrations
           command: docker compose exec -T php php artisan migrate --force
